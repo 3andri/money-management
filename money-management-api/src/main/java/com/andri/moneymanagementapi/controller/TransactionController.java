@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/transaction")
 public class TransactionController {
@@ -22,6 +24,13 @@ public class TransactionController {
     public ResponseEntity<ResponseDTO> addTransaction(@RequestBody Transaction transaction) {
         transactionRepository.saveAndFlush(transaction);
         return CommonResponse.getInstance().getOk();
+
+    }
+
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    public ResponseEntity<List<Transaction>> allTransaction() {
+
+        return ResponseEntity.ok(transactionRepository.findAll());
 
     }
 }

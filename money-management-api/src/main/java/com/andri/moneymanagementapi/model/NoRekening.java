@@ -1,5 +1,6 @@
 package com.andri.moneymanagementapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,27 +18,23 @@ import java.util.List;
 @NoArgsConstructor
 public class NoRekening {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idRekening;
-    private int noRekening;
+    private String noRekening;
     private String namaRekening;
-    private  String kodeBank;
+    private String kodeBank;
     private String namaBank;
     private int saldo;
-    @CreatedDate
-    @Column(name = "update_date",  updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", updatable = true)
     private LocalDateTime updateDate;
-    @OneToMany()
+    @Column(updatable = false)
+    private LocalDateTime createDate;
+    @JsonIgnore
+    @OneToMany(mappedBy = "noRekening", fetch = FetchType.LAZY)
+    //@JoinColumn(name = "idNorekening")
     private List<Transaction> transactions;
-
-    @ManyToOne
-    @JoinColumn(name = "transaction_id_transaction")
-    private Transaction transaction;
-
 
     @PrePersist
     public void prePersist() {
-        updateDate =LocalDateTime.now();
+        updateDate = LocalDateTime.now();
+        createDate = LocalDateTime.now();
     }
 }
