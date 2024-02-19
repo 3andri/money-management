@@ -7,15 +7,14 @@ import com.andri.moneymanagementapi.repository.TransactionRepository;
 import com.andri.moneymanagementapi.service.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/transaction")
+@CrossOrigin(origins = "*")
 public class TransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
@@ -28,8 +27,8 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
+    @Transactional
     public ResponseEntity<List<Transaction>> allTransaction() {
-
         return ResponseEntity.ok(transactionRepository.findAll());
 
     }

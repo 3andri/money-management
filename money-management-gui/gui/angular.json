@@ -3,29 +3,35 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "test": {
+    "gui": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/test",
+            "outputPath": "dist/gui",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -46,12 +52,9 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -60,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "test:build:production"
+              "buildTarget": "gui:build:production"
             },
             "development": {
-              "browserTarget": "test:build:development"
+              "buildTarget": "gui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test:build"
+            "buildTarget": "gui:build"
           }
         },
         "test": {
@@ -82,12 +85,14 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -96,6 +101,6 @@
     }
   },
   "cli": {
-    "analytics": "997d8e20-3d8b-4b5c-a201-ff5b9325bd90"
+    "analytics": false
   }
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE,region = "data")
 public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
